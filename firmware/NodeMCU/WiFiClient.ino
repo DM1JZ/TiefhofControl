@@ -19,6 +19,8 @@ const uint16_t port = 20000;
 void setup() {
   Serial.begin(115200);
 
+  pinMode(A0, INPUT);
+
   // We start by connecting to a WiFi network
 
   Serial.println();
@@ -59,8 +61,10 @@ void loop() {
 
   // This will send a string to the server
   Serial.println("sending data to server");
-  if (client.connected()) {
-    client.println("hello from ESP8266");
+  while (client.connected()) {
+    client.println(analogRead(A0));
+    Serial.println(analogRead(A0));
+    delay(100);
   }
 
   // wait for data to be available
